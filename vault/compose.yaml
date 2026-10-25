@@ -6,8 +6,9 @@ services:
     cap_add: [IPC_LOCK]
     environment:
       VAULT_ADDR: http://127.0.0.1:8200
+      VAULT_API_ADDR: http://${HOST_IP}:8200
     ports:
-      - "127.0.0.1:8200:8200"
+      - "${HOST_IP:?set HOST_IP in .env}:8200:8200"
     volumes:
       - ./config:/etc/vault
       - vault-data:/vault/file
