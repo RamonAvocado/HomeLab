@@ -1,14 +1,15 @@
 services:
   vault:
+    container_name: vault
     image: hashicorp/vault:1.20
-    command: server
+    command: server -config=/etc/vault/vault.hcl
     cap_add: [IPC_LOCK]
     environment:
       VAULT_ADDR: http://127.0.0.1:8200
     ports:
       - "127.0.0.1:8200:8200"
     volumes:
-      - ./config:/vault/config:ro
+      - ./config:/etc/vault
       - vault-data:/vault/file
     networks: [homelab]
     restart: unless-stopped
