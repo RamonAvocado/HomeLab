@@ -1,0 +1,24 @@
+services:
+  vault:
+    image: hashicorp/vault:1.20
+    command: server
+    cap_add: [IPC_LOCK]
+    environment:
+      VAULT_ADDR: http://127.0.0.1:8200
+    ports:
+      - "127.0.0.1:8200:8200"
+    volumes:
+      - ./config:/vault/config:ro
+      - vault-data:/vault/file
+    networks: [homelab]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "vault status >/dev/null; [ $$? -ne 1 ]"]
+      interval: 30s
+
+networks:
+  homelab:
+    name: homelab
+
+volumes:
+  vault-data:

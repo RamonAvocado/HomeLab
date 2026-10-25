@@ -1,0 +1,4 @@
+*.unseal
+*.token
+init*.txt
+.env
