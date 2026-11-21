@@ -12,7 +12,7 @@ services:
     volumes:
       - ./config:/etc/vault
       - vault-data:/vault/file
-    networks: [homelab]
+    networks: [homelab, proxy]
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "vault status >/dev/null; [ $$? -ne 1 ]"]
@@ -21,6 +21,9 @@ services:
 networks:
   homelab:
     name: homelab
+  proxy:
+    external: true
 
 volumes:
   vault-data:
+    external: true
